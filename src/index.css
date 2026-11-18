@@ -1,0 +1,155 @@
+@import 'tailwindcss';
+
+@layer base {
+  :root {
+    --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  /* Prevent automatic unwanted iOS Safari zoom on focus while maintaining clean desktop sizing */
+  input, select, textarea {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, select, textarea {
+      font-size: 0.8125rem;
+    }
+  }
+}
+
+/* Custom Luxury Typography Helpers */
+.font-serif-luxury {
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.font-cormorant {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-sans-luxury {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* Fluid Scalable Typography for Universal Screen Sizes (320px to 4K Ultrawide) */
+.text-hero-fluid {
+  font-size: clamp(2.4rem, 7.5vw, 7.25rem);
+  line-height: 0.92;
+}
+
+.text-heading-fluid {
+  font-size: clamp(1.85rem, 4.2vw, 4.5rem);
+  line-height: 1.08;
+}
+
+.text-brand-fluid {
+  font-size: clamp(1.05rem, 2.2vw, 2.4rem);
+}
+
+/* 3D Perspective Container */
+.perspective-1200 {
+  perspective: 1200px;
+  perspective-origin: center center;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Completely Hide Scrollbar across all browsers while keeping smooth scrolling active */
+html,
+body,
+#root,
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+/* Animated Border Glow for Start Now Button */
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-border-spin {
+  animation: borderRotate 4s linear infinite;
+}
+
+/* Shimmer Light Sweeping Animation */
+@keyframes shimmerPass {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  50%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmerPass 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Diamond Star Twinkle */
+@keyframes diamondTwinkle {
+  0%, 100% {
+    transform: scale(0.6) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.25) rotate(45deg);
+    opacity: 1;
+  }
+}
+
+.animate-twinkle {
+  animation: diamondTwinkle 2.4s ease-in-out infinite;
+}
+
+/* Ambient Floating Keyframe fallback */
+@keyframes ambientFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+.animate-ambient-float {
+  animation: ambientFloat 6s ease-in-out infinite;
+}
