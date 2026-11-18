@@ -241,12 +241,11 @@ export function getResponsiveCameraConfig(width, height) {
   let heroFov;
   let heroCamPos, heroCamTarget;
   let detailsCamPos, detailsCamTarget;
-  let authCamPos, authCamTarget;
+  let authCamPos, authCamTarget, authRingRot;
   let footerCamPos, footerCamTarget, footerRingRot;
 
   if (isMobileLandscape) {
     // 1. MOBILE IN LANDSCAPE ORIENTATION (e.g. iPhone / Android held sideways, height 320px - 540px)
-    // Low FOV and side-by-side positioning keeps ring and text from being squished vertically
     heroFov = 38;
     heroCamPos = { x: 1.15, y: -0.42, z: 5.6 };
     heroCamTarget = { x: 0.85, y: 0.02, z: -0.2 };
@@ -254,15 +253,16 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamPos = { x: -1.18, y: -0.36, z: 5.4 };
     detailsCamTarget = { x: -0.68, y: 0.06, z: -0.1 };
 
-    authCamPos = { x: -1.45, y: -0.22, z: 6.2 };
-    authCamTarget = { x: -0.65, y: -0.04, z: -0.1 };
+    // Auth: Ring on Left side, login on right side (Frontside of ring faces the camera)
+    authCamPos = { x: 1.20, y: -0.32, z: 5.6 };
+    authCamTarget = { x: 0.78, y: 0.04, z: -0.1 };
+    authRingRot = { x: -0.25, y: 0.12, z: -0.18 };
 
     footerCamPos = { x: -1.52, y: -0.20, z: 5.8 };
     footerCamTarget = { x: -0.65, y: -0.04, z: -0.1 };
     footerRingRot = { x: -0.30, y: 0.10, z: -0.85 };
   } else if (isDesktopLandscape) {
     // 2. DESKTOP, LAPTOP & ULTRAWIDE MONITORS (13" to 32", 4K, 5K, 6K, 21:9, 32:9)
-    // Adjust FOV and horizontal shift proportionally for 21:9 (aspect ~2.38) and 32:9 (aspect ~3.55)
     heroFov = aspect >= 2.0 ? 43 : 45;
 
     // Shift ring horizontally outward on ultrawide displays so it locks to the centered content column
@@ -277,9 +277,10 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamPos = { x: -1.35 - ultrawideShift * 0.75, y: -0.95, z: 5.2 + laptopZAdj + ultrawideShift * 0.15 };
     detailsCamTarget = { x: -0.75 - ultrawideShift * 0.65, y: 0.15, z: -0.15 };
 
-    // Auth: VIP Maison Vault
-    authCamPos = { x: -1.83 - ultrawideShift * 0.5, y: -0.14, z: 6.0 + laptopZAdj };
-    authCamTarget = { x: -0.78 - ultrawideShift * 0.4, y: -0.03, z: -0.12 };
+    // Auth: VIP Maison Vault - Ring on LEFT side, Login/Register on RIGHT, Frontside diamonds facing viewer
+    authCamPos = { x: 1.35 + ultrawideShift * 0.75, y: -0.65, z: 5.35 + laptopZAdj + ultrawideShift * 0.15 };
+    authCamTarget = { x: 0.85 + ultrawideShift * 0.65, y: 0.12, z: -0.15 };
+    authRingRot = { x: -0.28, y: 0.14, z: -0.20 };
 
     // Footer: DIKSHI JEWELLERY Brand Signoff
     footerCamPos = { x: -1.95 - ultrawideShift * 0.6, y: -0.15, z: 5.6 + laptopZAdj };
@@ -287,7 +288,6 @@ export function getResponsiveCameraConfig(width, height) {
     footerRingRot = { x: -0.35, y: 0.15, z: -0.92 };
   } else if (isTabletPortrait) {
     // 3. TABLETS & FOLDABLES IN PORTRAIT (iPad Mini, iPad Air, iPad Pro 11"/13", Surface Pro 900x1440)
-    // Horizontally centered (x = 0). Distance Z scales inversely with aspect ratio so the ring is never cut off.
     heroFov = 48;
     const heroZ = Math.max(6.8, Math.min(10.5, 4.6 / Math.max(0.45, aspect)));
     heroCamPos = { x: 0, y: -1.15, z: heroZ };
@@ -298,8 +298,9 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamTarget = { x: -0.35, y: 0.15, z: 0.05 };
 
     const authZ = Math.max(7.5, Math.min(11.5, 4.8 / Math.max(0.45, aspect)));
-    authCamPos = { x: 0, y: -1.9, z: authZ };
-    authCamTarget = { x: 0, y: -1.05, z: -0.12 };
+    authCamPos = { x: 0, y: -1.35, z: authZ };
+    authCamTarget = { x: 0, y: 0.35, z: -0.12 };
+    authRingRot = { x: -0.25, y: 0.10, z: -0.15 };
 
     const footerZ = Math.max(7.2, Math.min(10.8, 4.4 / Math.max(0.45, aspect)));
     footerCamPos = { x: -0.45, y: -0.25, z: footerZ };
@@ -307,7 +308,6 @@ export function getResponsiveCameraConfig(width, height) {
     footerRingRot = { x: -0.35, y: 0.15, z: -0.92 };
   } else {
     // 4. ALL SMARTPHONES IN PORTRAIT (iPhone SE, 12, 13, 14, 15, 16, 17, Samsung Galaxy, Pixel, Fold Cover)
-    // Horizontally centered (x = 0), uncropped, top 38% of viewport.
     heroFov = 52;
     const heroZ = Math.max(7.4, Math.min(12.0, 3.8 / Math.max(0.35, aspect)));
     heroCamPos = { x: 0, y: -0.95, z: heroZ };
@@ -318,8 +318,9 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamTarget = { x: 0, y: 0.95, z: 0.05 };
 
     const authZ = Math.max(7.8, Math.min(12.0, 4.2 / Math.max(0.35, aspect)));
-    authCamPos = { x: 0, y: -2.1, z: authZ };
-    authCamTarget = { x: 0, y: -1.1, z: -0.12 };
+    authCamPos = { x: 0, y: -1.25, z: authZ };
+    authCamTarget = { x: 0, y: 0.40, z: -0.12 };
+    authRingRot = { x: -0.25, y: 0.10, z: -0.15 };
 
     const footerZ = Math.max(7.5, Math.min(11.5, 3.8 / Math.max(0.35, aspect)));
     footerCamPos = { x: 0, y: -0.3, z: footerZ };
@@ -340,6 +341,7 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamTarget,
     authCamPos,
     authCamTarget,
+    authRingRot,
     footerCamPos,
     footerCamTarget,
     footerRingRot,
@@ -510,7 +512,7 @@ export default function WebgiRingViewer({
     });
     scrollTriggerInstancesRef.current.push(st1);
 
-    // VIEW 3: AUTH SECTION (LOGIN / REGISTER BOX AT END OF SCREEN)
+    // VIEW 3: AUTH SECTION (MAISON VAULT - RING ROLLS TO LEFT SIDE, LOGIN/REGISTER ON RIGHT)
     const st2 = ScrollTrigger.create({
       trigger: '#auth-section',
       start: 'top bottom',
@@ -526,12 +528,16 @@ export default function WebgiRingViewer({
         camTargetRef.current.y = gsap.utils.interpolate(cfg.detailsCamTarget.y, cfg.authCamTarget.y, p);
         camTargetRef.current.z = gsap.utils.interpolate(cfg.detailsCamTarget.z, cfg.authCamTarget.z, p);
 
-        ringRotRef.current.z = gsap.utils.interpolate(Math.PI / 2, -Math.PI / 2, p);
+        // Ring dynamically rolls across to the left side with its frontside facing the camera
+        const authRot = cfg.authRingRot || { x: -0.28, y: 0.14, z: -0.20 };
+        ringRotRef.current.x = gsap.utils.interpolate(0, authRot.x, p);
+        ringRotRef.current.y = gsap.utils.interpolate(0, authRot.y, p);
+        ringRotRef.current.z = gsap.utils.interpolate(Math.PI / 2, authRot.z, p);
       },
     });
     scrollTriggerInstancesRef.current.push(st2);
 
-    // VIEW 4: FOOTER SECTION (REFERENCE IMAGE 2: EXACT BRAND SIGNOFF & PLATINUM RING)
+    // VIEW 4: FOOTER SECTION (REFERENCE IMAGE 2: EXACT BRAND SIGNOFF & PLATINUM RING ON RIGHT)
     const st3 = ScrollTrigger.create({
       trigger: '#footer-section',
       start: 'top bottom',
@@ -539,6 +545,8 @@ export default function WebgiRingViewer({
       scrub: true,
       onUpdate: (self) => {
         const p = self.progress;
+        const authRot = cfg.authRingRot || { x: -0.28, y: 0.14, z: -0.20 };
+
         camPosRef.current.x = gsap.utils.interpolate(cfg.authCamPos.x, cfg.footerCamPos.x, p);
         camPosRef.current.y = gsap.utils.interpolate(cfg.authCamPos.y, cfg.footerCamPos.y, p);
         camPosRef.current.z = gsap.utils.interpolate(cfg.authCamPos.z, cfg.footerCamPos.z, p);
@@ -547,9 +555,9 @@ export default function WebgiRingViewer({
         camTargetRef.current.y = gsap.utils.interpolate(cfg.authCamTarget.y, cfg.footerCamTarget.y, p);
         camTargetRef.current.z = gsap.utils.interpolate(cfg.authCamTarget.z, cfg.footerCamTarget.z, p);
 
-        ringRotRef.current.x = gsap.utils.interpolate(0, cfg.footerRingRot.x, p);
-        ringRotRef.current.y = gsap.utils.interpolate(0, cfg.footerRingRot.y, p);
-        ringRotRef.current.z = gsap.utils.interpolate(-Math.PI / 2, cfg.footerRingRot.z, p);
+        ringRotRef.current.x = gsap.utils.interpolate(authRot.x, cfg.footerRingRot.x, p);
+        ringRotRef.current.y = gsap.utils.interpolate(authRot.y, cfg.footerRingRot.y, p);
+        ringRotRef.current.z = gsap.utils.interpolate(authRot.z, cfg.footerRingRot.z, p);
       },
     });
     scrollTriggerInstancesRef.current.push(st3);

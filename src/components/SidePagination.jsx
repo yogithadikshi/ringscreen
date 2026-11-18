@@ -2,7 +2,7 @@ import React from 'react';
 import { luxuryAudio } from '../utils/audio';
 
 const SECTIONS = [
-  { id: 'hero', label: 'Unique Jewelry' },
+  { id: 'hero', label: 'Unique Jewellery' },
   { id: 'details-section', label: 'Maison Artistry' },
   { id: 'auth-section', label: 'VIP Vault Sign In' },
 ];

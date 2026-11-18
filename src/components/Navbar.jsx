@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Info } from 'lucide-react';
 import { luxuryAudio } from '../utils/audio';
 
@@ -7,6 +7,17 @@ export default function Navbar({
   setIsDark,
   onOpenKnowMore,
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleThemeToggle = () => {
     luxuryAudio.playClick();
     setIsDark(!isDark);
@@ -18,8 +29,14 @@ export default function Navbar({
     ? 'border-white/25 hover:border-white/60 bg-white/10 text-[#FAF6F0]'
     : 'border-[#3E1821]/20 hover:border-[#3E1821]/50 bg-[#3E1821]/5 text-[#3E1821]';
 
+  const headerBgClass = isScrolled
+    ? isDark
+      ? 'bg-[#8B1E2E]/85 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)] py-3 sm:py-4'
+      : 'bg-[#FBF4F5]/90 backdrop-blur-xl border-b border-[#3E1821]/10 shadow-[0_4px_30px_rgba(0,0,0,0.06)] py-3 sm:py-4'
+    : 'bg-transparent py-3 sm:py-5 lg:py-7';
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 lg:px-16 2xl:px-24 pt-[max(0.75rem,env(safe-area-inset-top,0px))] pb-3 sm:py-5 lg:py-7 transition-colors duration-500 pointer-events-none">
+    <header className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 lg:px-16 2xl:px-24 pt-[max(0.75rem,env(safe-area-inset-top,0px))] transition-all duration-500 ease-out pointer-events-none ${headerBgClass}`}>
       <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] mx-auto flex items-center justify-between pointer-events-auto">
         
         {/* Brand Logo - DIKSHI JEWELLERY with Tagline */}

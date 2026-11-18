@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { luxuryAudio } from '../utils/audio';
 
@@ -7,11 +7,23 @@ export default function HeroSection({
   isDark = false,
   onExploreClick,
 }) {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Graceful scroll fade-out: disappears smoothly before it ever reaches the top header
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.38], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.38], [0, -35]);
+  const promptOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+
   const headingColor = isDark ? 'text-[#FAF6F0]' : 'text-[#3E1821]';
   const paragraphColor = isDark ? 'text-[#FAF6F0]/90' : 'text-[#3E1821]/85';
 
   return (
     <section 
+      ref={heroRef}
       id="hero"
       className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center px-4 sm:px-8 lg:px-16 2xl:px-24 pt-[max(4.5rem,env(safe-area-inset-top,0px))] pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] overflow-hidden pointer-events-none"
     >
@@ -24,9 +36,12 @@ export default function HeroSection({
         <div className="hidden lg:block lg:col-span-6 xl:col-span-6 pointer-events-none" />
 
         {/* Typography Column: Editorial Haute Joaillerie text */}
-        <div className="w-full lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3 sm:space-y-6 lg:space-y-8 pl-0 lg:pl-6 xl:pl-10 2xl:pl-14 pointer-events-auto pb-4 lg:pb-0">
+        <motion.div 
+          style={{ opacity: contentOpacity, y: contentY }}
+          className="w-full lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3 sm:space-y-6 lg:space-y-8 pl-0 lg:pl-6 xl:pl-10 2xl:pl-14 pointer-events-auto pb-4 lg:pb-0"
+        >
           
-          {/* Main Title: UNIQUE JEWELRY */}
+          {/* Main Title: UNIQUE JEWELLERY */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -35,7 +50,7 @@ export default function HeroSection({
           >
             <h1 className={`font-serif-luxury text-hero-fluid tracking-tight leading-[0.9] uppercase font-normal ${headingColor}`}>
               <span className="block hover:tracking-normal transition-all duration-500">UNIQUE</span>
-              <span className="block mt-1 sm:mt-2 italic font-light hover:tracking-normal transition-all duration-500">JEWELRY</span>
+              <span className="block mt-1 sm:mt-2 italic font-light hover:tracking-normal transition-all duration-500">JEWELLERY</span>
             </h1>
           </motion.div>
 
@@ -48,12 +63,13 @@ export default function HeroSection({
           >
             Customize your unique ring with graphic angles and pure lines that combine to create the pure beauty of the collection.
           </motion.p>
-        </div>
+        </motion.div>
 
       </div>
 
       {/* Bottom Center: Scroll Prompt Indicator */}
       <motion.div
+        style={{ opacity: promptOpacity }}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 1 }}

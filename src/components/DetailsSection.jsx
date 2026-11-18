@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sparkles, ShieldCheck, Gem, Award, ArrowDown } from 'lucide-react';
 import { luxuryAudio } from '../utils/audio';
 
@@ -26,6 +26,16 @@ export default function DetailsSection({
   isDark = false,
   onScrollToAuth,
 }) {
+  const detailsRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: detailsRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Smooth entrance as section comes into view, and clean exit as it scrolls towards Maison Vault
+  const contentOpacity = useTransform(scrollYProgress, [0.12, 0.35, 0.75, 0.95], [0, 1, 1, 0]);
+  const contentY = useTransform(scrollYProgress, [0.12, 0.35, 0.75, 0.95], [35, 0, 0, -30]);
+
   const headingColor = isDark ? 'text-[#FAF6F0]' : 'text-[#3E1821]';
   const subtextColor = isDark ? 'text-[#FAF6F0]/85' : 'text-[#3E1821]/80';
   const cardBg = isDark
@@ -34,13 +44,17 @@ export default function DetailsSection({
 
   return (
     <section 
+      ref={detailsRef}
       id="details-section"
       className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center py-16 sm:py-24 lg:py-28 px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 transition-colors duration-700 pointer-events-auto overflow-hidden"
     >
       <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 2xl:gap-16 items-center">
         
         {/* Left Column: Heading, Description & 4 Feature Cards (Positioned on the Left Side) */}
-        <div className="w-full lg:col-span-7 xl:col-span-7 2xl:col-span-7 flex flex-col items-start text-left space-y-6 sm:space-y-8 lg:space-y-10">
+        <motion.div 
+          style={{ opacity: contentOpacity, y: contentY }}
+          className="w-full lg:col-span-7 xl:col-span-7 2xl:col-span-7 flex flex-col items-start text-left space-y-6 sm:space-y-8 lg:space-y-10"
+        >
           
           {/* Section Header */}
           <div className="space-y-3 sm:space-y-4 max-w-xl 2xl:max-w-2xl">
@@ -96,7 +110,7 @@ export default function DetailsSection({
             </button>
           </div>
 
-        </div>
+        </motion.div>
 
         {/* Right Column: Reserved space on Desktop where the 3D Ring is positioned on the Right */}
         <div className="hidden lg:block lg:col-span-5 xl:col-span-5 2xl:col-span-5 pointer-events-none min-h-[420px] 2xl:min-h-[520px]" />
