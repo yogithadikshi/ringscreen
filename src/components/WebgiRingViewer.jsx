@@ -280,9 +280,9 @@ function getResponsiveCameraConfig(width, height) {
   } else if (isTabletPortrait) {
     // 3. TABLETS & FOLDABLES IN PORTRAIT (iPad Mini, iPad Air, iPad Pro 11"/13", Surface Pro 900x1440)
     heroFov = 46;
-    const heroZ = Math.max(6.0, Math.min(8.2, 4.4 / Math.max(0.55, aspect)));
-    heroCamPos = { x: 0, y: -0.05, z: heroZ };
-    heroCamTarget = { x: 0, y: -0.80, z: -0.15 };
+    const heroZ = Math.max(7.2, Math.min(8.8, 4.4 / Math.max(0.55, aspect)));
+    heroCamPos = { x: 0, y: 0.22, z: heroZ };
+    heroCamTarget = { x: 0, y: -1.50, z: -0.15 };
 
     const detailsZ = Math.max(6.0, Math.min(8.5, 4.2 / Math.max(0.55, aspect)));
     detailsCamPos = { x: -0.65, y: -0.10, z: detailsZ };
@@ -299,20 +299,20 @@ function getResponsiveCameraConfig(width, height) {
     footerRingRot = { x: -0.35, y: 0.15, z: -0.92 };
   } else {
     // 4. ALL SMARTPHONES IN PORTRAIT (iPhone SE, 12, 13, 14, 15, 16, 17, Samsung Galaxy, Pixel, Fold Cover)
-    // Centers ring gracefully in the upper viewport (10-14% from top, finishing at 43%)
-    // Completely eliminates empty top gap and ensures zero overlap with UNIQUE JEWELLERY
+    // Centers ring gracefully in the upper viewport (10-12% from top, finishing cleanly above text)
+    // Completely eliminates empty top gap and guarantees zero overlap with UNIQUE JEWELLERY
     heroFov = 48;
-    const heroZ = Math.max(6.2, Math.min(8.6, 3.4 / Math.max(0.35, aspect)));
-    heroCamPos = { x: 0, y: -0.05, z: heroZ };
-    heroCamTarget = { x: 0, y: -0.80, z: -0.15 };
+    const heroZ = Math.max(7.4, Math.min(8.8, (height < 750 ? 4.7 : 3.8) / Math.max(0.35, aspect)));
+    heroCamPos = { x: 0, y: 0.26, z: heroZ };
+    heroCamTarget = { x: 0, y: -1.65, z: -0.15 };
 
-    const detailsZ = Math.max(6.0, Math.min(8.8, 3.2 / Math.max(0.35, aspect)));
-    detailsCamPos = { x: 0, y: 0.10, z: detailsZ };
-    detailsCamTarget = { x: 0, y: -0.40, z: 0.05 };
+    const detailsZ = Math.max(6.8, Math.min(8.8, 3.8 / Math.max(0.35, aspect)));
+    detailsCamPos = { x: 0, y: 0.20, z: detailsZ };
+    detailsCamTarget = { x: 0, y: -1.05, z: 0.05 };
 
-    const authZ = Math.max(6.8, Math.min(9.5, 3.6 / Math.max(0.35, aspect)));
-    authCamPos = { x: 0, y: 0.10, z: authZ };
-    authCamTarget = { x: 0, y: -1.00, z: -0.12 };
+    const authZ = Math.max(7.0, Math.min(9.5, 4.0 / Math.max(0.35, aspect)));
+    authCamPos = { x: 0, y: 0.20, z: authZ };
+    authCamTarget = { x: 0, y: -1.30, z: -0.12 };
     authRingRot = { x: -0.25, y: 0.10, z: -0.15 };
 
     const footerZ = Math.max(7.8, Math.min(10.5, 3.8 / Math.max(0.35, aspect)));

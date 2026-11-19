@@ -45,7 +45,7 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
       <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4xl:max-w-[2400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center">
         
         {/* On Mobile & Tablet Portrait: Reserved upper viewport space for the 3D Ring */}
-        <div className="w-full h-[28vh] xs:h-[32vh] sm:h-[34vh] md:h-[36vh] max-h-[360px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
+        <div className="w-full h-[40vh] xs:h-[44vh] sm:h-[44vh] max-h-[400px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
 
         {/* On Desktop & Ultrawide: Left Column spacer for 3D Ring on FULL LEFT */}
         <div className="hidden lg:block lg:col-span-6 xl:col-span-6 2xl:col-span-6 pointer-events-none min-h-[400px] 2xl:min-h-[500px] 3xl:min-h-[600px]" />

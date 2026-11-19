@@ -49,25 +49,25 @@ export default function Navbar({
     : 'bg-transparent py-3 sm:py-5 lg:py-7';
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 px-3 xs:px-5 sm:px-8 lg:px-16 2xl:px-24 4xl:px-32 pt-[max(0.75rem,env(safe-area-inset-top,0px))] transition-all duration-500 ease-out pointer-events-none ${headerBgClass}`}>
-      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4xl:max-w-[2400px] mx-auto flex items-center justify-between pointer-events-auto">
+    <header className={`fixed top-0 left-0 right-0 z-50 px-2 sm:px-6 lg:px-16 2xl:px-24 4xl:px-32 pt-[max(0.6rem,env(safe-area-inset-top,0px))] transition-all duration-500 ease-out pointer-events-none ${headerBgClass}`}>
+      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4xl:max-w-[2400px] mx-auto flex items-center justify-between gap-1.5 sm:gap-4 pointer-events-auto min-w-0">
         
         {/* Brand Logo - DIKSHI JEWELLERY with Tagline */}
         <a 
           href="#hero" 
           onClick={() => luxuryAudio.playClick()}
-          className="group flex flex-col items-center justify-center text-center select-none transition-transform duration-300 hover:scale-[1.01]"
+          className="group flex flex-col items-start min-[360px]:items-center justify-center text-left min-[360px]:text-center select-none transition-transform duration-300 hover:scale-[1.01] min-w-0 flex-shrink"
         >
-          <span className={`font-serif-luxury text-[13px] xs:text-base sm:text-2xl md:text-3xl lg:text-[32px] 3xl:text-4xl tracking-[0.14em] sm:tracking-[0.2em] uppercase font-semibold whitespace-nowrap ${textColor}`}>
+          <span className={`font-serif-luxury text-[clamp(9.5px,3.2vw,14px)] xs:text-base sm:text-2xl md:text-3xl lg:text-[32px] 3xl:text-4xl tracking-[0.08em] min-[320px]:tracking-[0.14em] sm:tracking-[0.2em] uppercase font-semibold truncate ${textColor}`}>
             DIKSHI JEWELLERY
           </span>
-          <span className="font-sans-luxury text-[7px] xs:text-[8px] sm:text-[10px] md:text-[11px] 3xl:text-xs font-light tracking-[0.2em] sm:tracking-[0.32em] uppercase text-[#D6C298] mt-0.5 sm:mt-1 whitespace-nowrap">
+          <span className="hidden min-[260px]:block font-sans-luxury text-[clamp(5.5px,1.8vw,7.5px)] xs:text-[8px] sm:text-[10px] md:text-[11px] 3xl:text-xs font-light tracking-[0.12em] min-[320px]:tracking-[0.2em] sm:tracking-[0.32em] uppercase text-[#D6C298] mt-0.5 whitespace-nowrap">
             ELEGANCE • TIMELESS BEAUTY
           </span>
         </a>
 
-        {/* Right Navigation & Controls */}
-        <div className="flex items-center gap-1.5 xs:gap-2.5 sm:gap-3.5 md:gap-5 lg:gap-6">
+        {/* Right Navigation & Controls (flex-shrink-0 guarantees icons never hide or get pushed off) */}
+        <div className="flex-shrink-0 flex items-center gap-1 min-[320px]:gap-1.5 xs:gap-2.5 sm:gap-3.5 md:gap-5 lg:gap-6">
           
           {/* Know More link */}
           <button
@@ -87,9 +87,9 @@ export default function Navbar({
             onClick={handleUserClick}
             aria-label="Go to VIP Client Login / Register"
             title="VIP Client Login & Register"
-            className={`w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 min-w-[34px] min-h-[34px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} hover:scale-105 active:scale-95 group`}
+            className={`w-7 h-7 min-[320px]:w-8 min-[320px]:h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 min-w-[28px] min-h-[28px] min-[320px]:min-w-[32px] min-[320px]:min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} hover:scale-105 active:scale-95 group flex-shrink-0`}
           >
-            <User className="w-3.5 h-3.5 xs:w-4 xs:h-4 opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-[1.75]" />
+            <User className="w-3 h-3 min-[320px]:w-3.5 min-[320px]:h-3.5 xs:w-4 xs:h-4 opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-[1.75]" />
           </button>
 
           {/* Theme Mode Toggle (Imperial Ruby Red vs Rose Luxury Blush Pink) */}
@@ -97,12 +97,12 @@ export default function Navbar({
             onClick={handleThemeToggle}
             aria-label={isDark ? 'Switch to Rose Luxury Blush Pink' : 'Switch to Imperial Ruby Red'}
             title={isDark ? 'Switch to Rose Luxury Blush Pink' : 'Switch to Imperial Ruby Red'}
-            className={`w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 min-w-[34px] min-h-[34px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} hover:scale-105 active:scale-95`}
+            className={`w-7 h-7 min-[320px]:w-8 min-[320px]:h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 min-w-[28px] min-h-[28px] min-[320px]:min-w-[32px] min-[320px]:min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} hover:scale-105 active:scale-95 flex-shrink-0`}
           >
             {isDark ? (
-              <Sun className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-amber-300 hover:rotate-45 transition-transform duration-500" />
+              <Sun className="w-3 h-3 min-[320px]:w-3.5 min-[320px]:h-3.5 xs:w-4 xs:h-4 text-amber-300 hover:rotate-45 transition-transform duration-500" />
             ) : (
-              <Moon className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-[#3E1821] opacity-75 hover:-rotate-12 transition-transform duration-500" />
+              <Moon className="w-3 h-3 min-[320px]:w-3.5 min-[320px]:h-3.5 xs:w-4 xs:h-4 text-[#3E1821] opacity-75 hover:-rotate-12 transition-transform duration-500" />
             )}
           </button>
 
@@ -113,9 +113,9 @@ export default function Navbar({
               onOpenKnowMore();
             }}
             aria-label="View jewellery details"
-            className={`md:hidden w-8 h-8 xs:w-9 xs:h-9 min-w-[34px] min-h-[34px] xs:min-w-[36px] xs:min-h-[36px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} active:scale-95`}
+            className={`md:hidden w-7 h-7 min-[320px]:w-8 min-[320px]:h-8 xs:w-9 xs:h-9 min-w-[28px] min-h-[28px] min-[320px]:min-w-[32px] min-[320px]:min-h-[32px] xs:min-w-[36px] xs:min-h-[36px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} active:scale-95 flex-shrink-0`}
           >
-            <Info className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
+            <Info className="w-3 h-3 min-[320px]:w-3.5 min-[320px]:h-3.5 xs:w-4 xs:h-4" />
           </button>
 
         </div>

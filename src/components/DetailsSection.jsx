@@ -51,7 +51,7 @@ export default function DetailsSection({
       <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4xl:max-w-[2400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 2xl:gap-16 items-center">
         
         {/* On Mobile & Tablet Portrait: Upper spacer so 3D Ring is framed above without overlapping text */}
-        <div className="w-full h-[30vh] xs:h-[34vh] sm:h-[36vh] max-h-[360px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
+        <div className="w-full h-[46vh] xs:h-[48vh] sm:h-[48vh] max-h-[440px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
 
         {/* Left Column: Heading, Description & 4 Feature Cards (Positioned on the Left Side) */}
         <motion.div 

@@ -30,7 +30,7 @@ export default function HeroSection({
       <div className="relative z-10 max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4xl:max-w-[2400px] w-full mx-auto flex flex-col lg:grid lg:grid-cols-12 items-center justify-start lg:justify-center min-h-[calc(100dvh-80px)] lg:min-h-[calc(100dvh-120px)]">
         
         {/* On Mobile & Tablet Portrait: Reserved space in the upper viewport matching the 3D Ring camera framing */}
-        <div className="w-full h-[32vh] xs:h-[36vh] sm:h-[40vh] max-h-[420px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
+        <div className="w-full h-[48vh] xs:h-[50vh] sm:h-[50vh] max-h-[460px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
 
         {/* On Desktop & Ultrawide: Left Column spacer where the 3D Ring is positioned on the left */}
         <div className="hidden lg:block landscape:block lg:col-span-6 xl:col-span-6 2xl:col-span-6 pointer-events-none" />
@@ -38,7 +38,7 @@ export default function HeroSection({
         {/* Typography Column: Editorial Haute Joaillerie text */}
         <motion.div 
           style={{ opacity: contentOpacity, y: contentY }}
-          className="w-full lg:col-span-6 xl:col-span-6 2xl:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-2.5 xs:space-y-3 sm:space-y-5 lg:space-y-7 3xl:space-y-9 pl-0 lg:pl-6 xl:pl-10 2xl:pl-14 3xl:pl-20 pointer-events-auto pb-6 lg:pb-0"
+          className="w-full lg:col-span-6 xl:col-span-6 2xl:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-2.5 xs:space-y-3 sm:space-y-4 lg:space-y-7 3xl:space-y-9 pl-0 lg:pl-6 xl:pl-10 2xl:pl-14 3xl:pl-20 pointer-events-auto pb-4 lg:pb-0"
         >
           
           {/* Main Title: UNIQUE JEWELLERY */}
@@ -59,7 +59,7 @@ export default function HeroSection({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className={`font-sans-luxury text-xs xs:text-sm sm:text-base md:text-lg 2xl:text-xl 3xl:text-2xl max-w-sm sm:max-w-md lg:max-w-lg 2xl:max-w-xl 3xl:max-w-2xl font-normal leading-relaxed tracking-wide ${paragraphColor}`}
+            className={`font-sans-luxury text-xs xs:text-sm sm:text-base md:text-lg 2xl:text-xl 3xl:text-2xl max-w-xs xs:max-w-sm sm:max-w-md lg:max-w-lg 2xl:max-w-xl 3xl:max-w-2xl font-normal leading-relaxed tracking-wide ${paragraphColor}`}
           >
             Customize your unique ring with graphic angles and pure lines that combine to create the pure beauty of the collection.
           </motion.p>
