@@ -416,7 +416,7 @@ export default function WebgiRingViewer({
       mountGLBRing(cachedGLBRef.current);
     } else {
       const loader = new GLTFLoader();
-      const modelUrl = currentRingModel === 1 ? '/ring_webgi.glb' : '/ring2_webgi.glb';
+      const modelUrl = '/ring_webgi.glb';
       loader.load(
         modelUrl,
         (gltf) => {
