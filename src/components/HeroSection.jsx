@@ -25,12 +25,12 @@ export default function HeroSection({
     <section 
       ref={heroRef}
       id="hero"
-      className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center px-4 sm:px-8 lg:px-16 2xl:px-24 pt-[max(4.5rem,env(safe-area-inset-top,0px))] pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] overflow-hidden pointer-events-none"
+      className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center px-4 sm:px-8 lg:px-16 2xl:px-24 pt-[max(3.75rem,env(safe-area-inset-top,0px))] pb-[max(2.25rem,env(safe-area-inset-bottom,0px))] overflow-hidden pointer-events-none"
     >
-      <div className="relative z-10 max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] w-full mx-auto flex flex-col lg:grid lg:grid-cols-12 items-center justify-between lg:justify-center min-h-[calc(100dvh-120px)]">
+      <div className="relative z-10 max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] w-full mx-auto flex flex-col lg:grid lg:grid-cols-12 items-center justify-start lg:justify-center min-h-[calc(100dvh-80px)] lg:min-h-[calc(100dvh-120px)]">
         
-        {/* On Mobile & Tablet Portrait: Reserved space in the upper viewport for the 3D Ring */}
-        <div className="w-full h-[32vh] xs:h-[35vh] sm:h-[40vh] md:h-[44vh] max-h-[440px] lg:hidden flex-shrink-0 pointer-events-none" />
+        {/* On Mobile & Tablet Portrait: Reserved space in the upper viewport matching the 3D Ring camera framing */}
+        <div className="w-full h-[38vh] xs:h-[40vh] sm:h-[42vh] max-h-[440px] lg:hidden flex-shrink-0 pointer-events-none" />
 
         {/* On Desktop & Ultrawide: Left Column spacer where the 3D Ring is positioned on the left */}
         <div className="hidden lg:block lg:col-span-6 xl:col-span-6 pointer-events-none" />
@@ -38,7 +38,7 @@ export default function HeroSection({
         {/* Typography Column: Editorial Haute Joaillerie text */}
         <motion.div 
           style={{ opacity: contentOpacity, y: contentY }}
-          className="w-full lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-3 sm:space-y-6 lg:space-y-8 pl-0 lg:pl-6 xl:pl-10 2xl:pl-14 pointer-events-auto pb-4 lg:pb-0"
+          className="w-full lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-2.5 xs:space-y-3 sm:space-y-5 lg:space-y-8 pl-0 lg:pl-6 xl:pl-10 2xl:pl-14 pointer-events-auto pb-6 lg:pb-0"
         >
           
           {/* Main Title: UNIQUE JEWELLERY */}
@@ -73,7 +73,7 @@ export default function HeroSection({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-3 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer group select-none pointer-events-auto"
+        className="absolute bottom-2.5 xs:bottom-3 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer group select-none pointer-events-auto"
         onClick={() => {
           luxuryAudio.playClick();
           onExploreClick();

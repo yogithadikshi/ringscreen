@@ -24,55 +24,46 @@ const DIAMOND_COLORS = {
   green: 0x44dd66,
   emerald: 0x00aa55,
   rose: 0xf70db1,
-  violet: 0x9933ff,
+  violet: 0xc200f2,
 };
 
 const MATERIAL_PRESETS = {
-  default: { silver: 0xfcfdfe, gold: 0xf0ca74 },
-  'silver-gold': { silver: 0xfcfdfe, gold: 0xf0ca74 },
-  'silver-silver': { silver: 0xfcfdfe, gold: 0xfcfdfe },
-  'gold-gold': { silver: 0xf0ca74, gold: 0xf0ca74 },
-  'rose-silver': { silver: 0xfcfdfe, gold: 0xf29c8e },
-  'gold-rose': { silver: 0xf29c8e, gold: 0xf0ca74 },
-  'rose-rose': { silver: 0xf29c8e, gold: 0xf29c8e },
+  default: { silver: 0xfefefe, gold: 0xe2bf7f },
+  'silver-gold': { silver: 0xfefefe, gold: 0xe2bf7f },
+  'silver-silver': { silver: 0xfefefe, gold: 0xfefefe },
+  'gold-gold': { silver: 0xe2bf7f, gold: 0xe2bf7f },
+  'rose-silver': { silver: 0xfefefe, gold: 0xd28b8b },
+  'gold-rose': { silver: 0xd28b8b, gold: 0xe2bf7f },
+  'rose-rose': { silver: 0xd28b8b, gold: 0xd28b8b },
 };
 
-// Dynamic Multi-Metal & Gemstone Stages (White, Pink, Red / Gold, Silver, Rose Gold, Platinum)
-// Excludes blue color
-const DYNAMIC_ROTATION_STAGES = [
-  // 1. First Stage (Hero): Pure White Solitaire Diamond + 18K Yellow Gold & Platinum
-  {
-    name: 'White Diamond & 18K Yellow Gold / Platinum',
-    stone: new THREE.Color(0xf4f6fb),
-    silver: new THREE.Color(0xc8cbd2),
-    gold: new THREE.Color(0xebb341),
+// Exact WebGi Multi-Metal & Gemstone Color Transitions (from https://webgi-jewelry.vercel.app/)
+// View 1 (Hero): Silver (0xfefefe) + Yellow Gold (0xe2bf7f) + White Diamond (0xffffff)
+// View 2 (Details): Rose Gold (0xd28b8b) + Rose Gold (0xd28b8b) + Aqua Diamond (0x39cffe)
+// View 3 (Vault): Sovereign Gold (0xf7c478) + Sovereign Gold (0xf7c478) + Ruby (0xf70db1)
+// View 4 (Footer): Platinum/Silver (0xfefefe) + Platinum/Silver (0xfefefe) + Light Purple (0xc200f2)
+const STAGE_COLORS = {
+  hero: {
+    silver: new THREE.Color(0xfefefe).convertSRGBToLinear(),
+    gold: new THREE.Color(0xe2bf7f).convertSRGBToLinear(),
+    stone: new THREE.Color(0xffffff).convertSRGBToLinear(),
   },
-  // 2. Second Stage (Details): Fancy Pink Diamond + 18K Rose Gold
-  {
-    name: 'Fancy Pink Diamond & 18K Rose Gold',
-    stone: new THREE.Color(0xff529a),
-    silver: new THREE.Color(0xdf8a86),
-    gold: new THREE.Color(0xf29c8e),
+  details: {
+    silver: new THREE.Color(0xd28b8b).convertSRGBToLinear(),
+    gold: new THREE.Color(0xd28b8b).convertSRGBToLinear(),
+    stone: new THREE.Color(0x39cffe).convertSRGBToLinear(),
   },
-  // 3. Third Stage (Vault): Royal Ruby Red + 22K Sovereign Gold
-  {
-    name: 'Royal Ruby Red & 22K Sovereign Gold',
-    stone: new THREE.Color(0xba1333),
-    silver: new THREE.Color(0xe8a432),
-    gold: new THREE.Color(0xf4bc44),
+  vault: {
+    silver: new THREE.Color(0xf7c478).convertSRGBToLinear(),
+    gold: new THREE.Color(0xf7c478).convertSRGBToLinear(),
+    stone: new THREE.Color(0xf70db1).convertSRGBToLinear(),
   },
-  // 4. Last Stage (Footer / All Silver-Platinum Ring): Light Purple Diamond + 950 Platinum & Silver
-  {
-    name: 'Light Purple Diamond & Cold-Forged Platinum / Silver',
-    stone: new THREE.Color(0xc896ff),
-    silver: new THREE.Color(0xc2c6cf),
-    gold: new THREE.Color(0xdce0ea),
+  footer: {
+    silver: new THREE.Color(0xfefefe).convertSRGBToLinear(),
+    gold: new THREE.Color(0xfefefe).convertSRGBToLinear(),
+    stone: new THREE.Color(0xc200f2).convertSRGBToLinear(),
   },
-];
-
-const _tempStone = new THREE.Color();
-const _tempSilver = new THREE.Color();
-const _tempGold = new THREE.Color();
+};
 
 /**
  * Procedural Needle-Fine Diamond Glint Texture (WebGi-style Micro Sparkle)
@@ -228,7 +219,7 @@ function createGlitterParticles(count = 70) {
  * - Apple iPhones (iPhone SE, 12, 13, 14, 15, 16, 17 series in Portrait & Landscape)
  * - Foldables & High-DPI Retina Displays
  */
-export function getResponsiveCameraConfig(width, height) {
+function getResponsiveCameraConfig(width, height) {
   const aspect = width / height;
   const isMobileLandscape = height <= 540 && aspect >= 1.35;
   const isMobilePortrait = width < 600 && !isMobileLandscape;
@@ -253,13 +244,13 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamPos = { x: -1.18, y: -0.36, z: 5.4 };
     detailsCamTarget = { x: -0.68, y: 0.06, z: -0.1 };
 
-    // Auth: Ring on Left side, login on right side (Frontside of ring faces the camera)
-    authCamPos = { x: 1.20, y: -0.32, z: 5.6 };
-    authCamTarget = { x: 0.78, y: 0.04, z: -0.1 };
+    // Auth: Ring on FULL LEFT side, login on right side (Frontside of ring faces the camera)
+    authCamPos = { x: 2.20, y: -0.28, z: 5.4 };
+    authCamTarget = { x: 1.45, y: 0.04, z: -0.1 };
     authRingRot = { x: -0.25, y: 0.12, z: -0.18 };
 
-    footerCamPos = { x: -1.52, y: -0.20, z: 5.8 };
-    footerCamTarget = { x: -0.65, y: -0.04, z: -0.1 };
+    footerCamPos = { x: -1.10, y: -0.40, z: 6.4 };
+    footerCamTarget = { x: -0.30, y: -0.40, z: -0.1 };
     footerRingRot = { x: -0.30, y: 0.10, z: -0.85 };
   } else if (isDesktopLandscape) {
     // 2. DESKTOP, LAPTOP & ULTRAWIDE MONITORS (13" to 32", 4K, 5K, 6K, 21:9, 32:9)
@@ -277,55 +268,57 @@ export function getResponsiveCameraConfig(width, height) {
     detailsCamPos = { x: -1.35 - ultrawideShift * 0.75, y: -0.95, z: 5.2 + laptopZAdj + ultrawideShift * 0.15 };
     detailsCamTarget = { x: -0.75 - ultrawideShift * 0.65, y: 0.15, z: -0.15 };
 
-    // Auth: VIP Maison Vault - Ring on LEFT side, Login/Register on RIGHT, Frontside diamonds facing viewer
-    authCamPos = { x: 1.35 + ultrawideShift * 0.75, y: -0.65, z: 5.35 + laptopZAdj + ultrawideShift * 0.15 };
-    authCamTarget = { x: 0.85 + ultrawideShift * 0.65, y: 0.12, z: -0.15 };
+    // Auth: VIP Maison Vault - Ring on FULL LEFT (~24-26% from left edge), Login/Register on FULL RIGHT
+    authCamPos = { x: 3.10 + ultrawideShift * 1.15, y: -0.55, z: 5.25 + laptopZAdj + ultrawideShift * 0.15 };
+    authCamTarget = { x: 2.05 + ultrawideShift * 1.05, y: 0.10, z: -0.15 };
     authRingRot = { x: -0.28, y: 0.14, z: -0.20 };
 
-    // Footer: DIKSHI JEWELLERY Brand Signoff
-    footerCamPos = { x: -1.95 - ultrawideShift * 0.6, y: -0.15, z: 5.6 + laptopZAdj };
-    footerCamTarget = { x: -0.75 - ultrawideShift * 0.5, y: -0.05, z: -0.1 };
+    // Footer: DIKSHI JEWELLERY Brand Signoff - Ring elevated and centered so its bottom shank gracefully crowns the top of DIKSHI JEWELLERY
+    footerCamPos = { x: -1.20 - ultrawideShift * 0.4, y: -0.40, z: 6.0 + laptopZAdj };
+    footerCamTarget = { x: -0.35 - ultrawideShift * 0.3, y: -0.40, z: -0.1 };
     footerRingRot = { x: -0.35, y: 0.15, z: -0.92 };
   } else if (isTabletPortrait) {
     // 3. TABLETS & FOLDABLES IN PORTRAIT (iPad Mini, iPad Air, iPad Pro 11"/13", Surface Pro 900x1440)
-    heroFov = 48;
-    const heroZ = Math.max(6.8, Math.min(10.5, 4.6 / Math.max(0.45, aspect)));
-    heroCamPos = { x: 0, y: -1.15, z: heroZ };
-    heroCamTarget = { x: 0, y: 0.35, z: -0.15 };
+    heroFov = 46;
+    const heroZ = Math.max(6.0, Math.min(8.2, 4.4 / Math.max(0.55, aspect)));
+    heroCamPos = { x: 0, y: -0.05, z: heroZ };
+    heroCamTarget = { x: 0, y: -0.80, z: -0.15 };
 
-    const detailsZ = Math.max(6.5, Math.min(9.8, 4.4 / Math.max(0.45, aspect)));
-    detailsCamPos = { x: -0.75, y: -0.75, z: detailsZ };
-    detailsCamTarget = { x: -0.35, y: 0.15, z: 0.05 };
+    const detailsZ = Math.max(6.0, Math.min(8.5, 4.2 / Math.max(0.55, aspect)));
+    detailsCamPos = { x: -0.65, y: -0.10, z: detailsZ };
+    detailsCamTarget = { x: -0.30, y: -0.50, z: 0.05 };
 
-    const authZ = Math.max(7.5, Math.min(11.5, 4.8 / Math.max(0.45, aspect)));
-    authCamPos = { x: 0, y: -1.35, z: authZ };
-    authCamTarget = { x: 0, y: 0.35, z: -0.12 };
+    const authZ = Math.max(6.8, Math.min(9.5, 4.4 / Math.max(0.55, aspect)));
+    authCamPos = { x: 0, y: 0.10, z: authZ };
+    authCamTarget = { x: 0, y: -1.00, z: -0.12 };
     authRingRot = { x: -0.25, y: 0.10, z: -0.15 };
 
-    const footerZ = Math.max(7.2, Math.min(10.8, 4.4 / Math.max(0.45, aspect)));
-    footerCamPos = { x: -0.45, y: -0.25, z: footerZ };
-    footerCamTarget = { x: -0.18, y: 0.05, z: -0.1 };
+    const footerZ = Math.max(7.2, Math.min(9.8, 4.4 / Math.max(0.55, aspect)));
+    footerCamPos = { x: -0.25, y: -0.35, z: footerZ };
+    footerCamTarget = { x: -0.08, y: -0.35, z: -0.1 };
     footerRingRot = { x: -0.35, y: 0.15, z: -0.92 };
   } else {
     // 4. ALL SMARTPHONES IN PORTRAIT (iPhone SE, 12, 13, 14, 15, 16, 17, Samsung Galaxy, Pixel, Fold Cover)
-    heroFov = 52;
-    const heroZ = Math.max(7.4, Math.min(12.0, 3.8 / Math.max(0.35, aspect)));
-    heroCamPos = { x: 0, y: -0.95, z: heroZ };
-    heroCamTarget = { x: 0, y: 0.40, z: -0.15 };
+    // Centers ring gracefully in the upper viewport (10-14% from top, finishing at 43%)
+    // Completely eliminates empty top gap and ensures zero overlap with UNIQUE JEWELLERY
+    heroFov = 48;
+    const heroZ = Math.max(6.2, Math.min(8.6, 3.4 / Math.max(0.35, aspect)));
+    heroCamPos = { x: 0, y: -0.05, z: heroZ };
+    heroCamTarget = { x: 0, y: -0.80, z: -0.15 };
 
-    const detailsZ = Math.max(6.5, Math.min(10.5, 3.4 / Math.max(0.35, aspect)));
-    detailsCamPos = { x: 0, y: -0.65, z: detailsZ };
-    detailsCamTarget = { x: 0, y: 0.95, z: 0.05 };
+    const detailsZ = Math.max(6.0, Math.min(8.8, 3.2 / Math.max(0.35, aspect)));
+    detailsCamPos = { x: 0, y: 0.10, z: detailsZ };
+    detailsCamTarget = { x: 0, y: -0.40, z: 0.05 };
 
-    const authZ = Math.max(7.8, Math.min(12.0, 4.2 / Math.max(0.35, aspect)));
-    authCamPos = { x: 0, y: -1.25, z: authZ };
-    authCamTarget = { x: 0, y: 0.40, z: -0.12 };
+    const authZ = Math.max(6.8, Math.min(9.5, 3.6 / Math.max(0.35, aspect)));
+    authCamPos = { x: 0, y: 0.10, z: authZ };
+    authCamTarget = { x: 0, y: -1.00, z: -0.12 };
     authRingRot = { x: -0.25, y: 0.10, z: -0.15 };
 
-    const footerZ = Math.max(7.5, Math.min(11.5, 3.8 / Math.max(0.35, aspect)));
-    footerCamPos = { x: 0, y: -0.3, z: footerZ };
-    footerCamTarget = { x: 0, y: 0.2, z: -0.1 };
-    footerRingRot = { x: -0.3, y: 0.1, z: -0.85 };
+    const footerZ = Math.max(7.8, Math.min(10.5, 3.8 / Math.max(0.35, aspect)));
+    footerCamPos = { x: 0, y: -0.30, z: footerZ };
+    footerCamTarget = { x: 0, y: -0.30, z: -0.1 };
+    footerRingRot = { x: -0.30, y: 0.10, z: -0.85 };
   }
 
   return {
@@ -385,6 +378,28 @@ export default function WebgiRingViewer({
   const camTargetRef = useRef({ x: 1.8, y: -0.05, z: -0.2 });
   const mouseOffsetRef = useRef({ x: 0, y: 0 });
   const ringRotRef = useRef({ x: 0, y: 0, z: 0 });
+
+  // WebGi Dynamic Scroll Metal & Gemstone Color Tracker
+  const _scrubSilver = useRef(new THREE.Color().copy(STAGE_COLORS.hero.silver));
+  const _scrubGold = useRef(new THREE.Color().copy(STAGE_COLORS.hero.gold));
+  const _scrubStone = useRef(new THREE.Color().copy(STAGE_COLORS.hero.stone));
+
+  const updateModelColors = (silverCol, goldCol, stoneCol) => {
+    if (silverMeshRef.current?.material?.color) {
+      silverMeshRef.current.material.color.copy(silverCol);
+    }
+    if (goldMeshRef.current?.material?.color) {
+      goldMeshRef.current.material.color.copy(goldCol);
+    }
+    if (diamondMeshesRef.current && diamondMeshesRef.current.length > 0) {
+      for (let i = 0; i < diamondMeshesRef.current.length; i++) {
+        const m = diamondMeshesRef.current[i];
+        if (m?.material?.color) {
+          m.material.color.copy(stoneCol);
+        }
+      }
+    }
+  };
 
   // Mount 3D Cinema-Grade Ring Model
   const mountRingModel = () => {
@@ -449,6 +464,9 @@ export default function WebgiRingViewer({
     goldMeshRef.current = goldMesh;
     diamondMeshesRef.current = diamondMeshes;
 
+    // Initialize with Hero colors (Silver + Yellow Gold + White Diamond)
+    updateModelColors(STAGE_COLORS.hero.silver, STAGE_COLORS.hero.gold, STAGE_COLORS.hero.stone);
+
     const ringSparkles = [
       { x: 0.02, y: 1.36, z: 0.40, speed: 2.6, offset: 0.0 },
       { x: -0.42, y: 1.20, z: 0.35, speed: 2.9, offset: 1.4 },
@@ -491,7 +509,8 @@ export default function WebgiRingViewer({
     scrollTriggerInstancesRef.current.forEach((st) => st.kill());
     scrollTriggerInstancesRef.current = [];
 
-    // VIEW 2: DETAILS SECTION
+    // VIEW 2: DETAILS SECTION (WebGi View 2 - FOREVER / ARTISTRY OF DIKSHI)
+    // Lerps from View 1 (Silver + Yellow Gold + White Diamond) to View 2 (Pure Rose Gold + Aqua Diamond)
     const st1 = ScrollTrigger.create({
       trigger: '#details-section',
       start: 'top bottom',
@@ -508,11 +527,18 @@ export default function WebgiRingViewer({
         camTargetRef.current.z = gsap.utils.interpolate(cfg.heroCamTarget.z, cfg.detailsCamTarget.z, p);
 
         ringRotRef.current.z = gsap.utils.interpolate(0, Math.PI / 2, p);
+
+        // WebGi exact metal & diamond color lerp: View 1 -> View 2
+        _scrubSilver.current.lerpColors(STAGE_COLORS.hero.silver, STAGE_COLORS.details.silver, p);
+        _scrubGold.current.lerpColors(STAGE_COLORS.hero.gold, STAGE_COLORS.details.gold, p);
+        _scrubStone.current.lerpColors(STAGE_COLORS.hero.stone, STAGE_COLORS.details.stone, p);
+        updateModelColors(_scrubSilver.current, _scrubGold.current, _scrubStone.current);
       },
     });
     scrollTriggerInstancesRef.current.push(st1);
 
-    // VIEW 3: AUTH SECTION (MAISON VAULT - RING ROLLS TO LEFT SIDE, LOGIN/REGISTER ON RIGHT)
+    // VIEW 3: AUTH SECTION (WebGi View 3 - EMOTIONS / MAISON VAULT)
+    // Lerps from View 2 (Pure Rose Gold + Aqua) to View 3 (Pure Sovereign Yellow Gold + Ruby Diamond)
     const st2 = ScrollTrigger.create({
       trigger: '#auth-section',
       start: 'top bottom',
@@ -533,11 +559,18 @@ export default function WebgiRingViewer({
         ringRotRef.current.x = gsap.utils.interpolate(0, authRot.x, p);
         ringRotRef.current.y = gsap.utils.interpolate(0, authRot.y, p);
         ringRotRef.current.z = gsap.utils.interpolate(Math.PI / 2, authRot.z, p);
+
+        // WebGi exact metal & diamond color lerp: View 2 -> View 3
+        _scrubSilver.current.lerpColors(STAGE_COLORS.details.silver, STAGE_COLORS.vault.silver, p);
+        _scrubGold.current.lerpColors(STAGE_COLORS.details.gold, STAGE_COLORS.vault.gold, p);
+        _scrubStone.current.lerpColors(STAGE_COLORS.details.stone, STAGE_COLORS.vault.stone, p);
+        updateModelColors(_scrubSilver.current, _scrubGold.current, _scrubStone.current);
       },
     });
     scrollTriggerInstancesRef.current.push(st2);
 
-    // VIEW 4: FOOTER SECTION (REFERENCE IMAGE 2: EXACT BRAND SIGNOFF & PLATINUM RING ON RIGHT)
+    // VIEW 4: FOOTER SECTION (WebGi View 4 - DIKSHI JEWELLERY BRAND SIGNOFF)
+    // Lerps from View 3 (Pure Sovereign Gold + Ruby) to View 4 (Pure Cold-Forged Platinum / Silver + Light Purple Diamond)
     const st3 = ScrollTrigger.create({
       trigger: '#footer-section',
       start: 'top bottom',
@@ -558,6 +591,12 @@ export default function WebgiRingViewer({
         ringRotRef.current.x = gsap.utils.interpolate(authRot.x, cfg.footerRingRot.x, p);
         ringRotRef.current.y = gsap.utils.interpolate(authRot.y, cfg.footerRingRot.y, p);
         ringRotRef.current.z = gsap.utils.interpolate(authRot.z, cfg.footerRingRot.z, p);
+
+        // WebGi exact metal & diamond color lerp: View 3 -> View 4
+        _scrubSilver.current.lerpColors(STAGE_COLORS.vault.silver, STAGE_COLORS.footer.silver, p);
+        _scrubGold.current.lerpColors(STAGE_COLORS.vault.gold, STAGE_COLORS.footer.gold, p);
+        _scrubStone.current.lerpColors(STAGE_COLORS.vault.stone, STAGE_COLORS.footer.stone, p);
+        updateModelColors(_scrubSilver.current, _scrubGold.current, _scrubStone.current);
       },
     });
     scrollTriggerInstancesRef.current.push(st3);
@@ -566,6 +605,7 @@ export default function WebgiRingViewer({
   // Entrance Animation: Ring glides smoothly into responsive hero position
   const runIntroAnimation = (cfg) => {
     if (!cfg) return;
+    updateModelColors(STAGE_COLORS.hero.silver, STAGE_COLORS.hero.gold, STAGE_COLORS.hero.stone);
     gsap.to(camPosRef.current, {
       x: cfg.heroCamPos.x,
       y: cfg.heroCamPos.y,
@@ -656,7 +696,7 @@ export default function WebgiRingViewer({
     // Master PBR Materials Engine - Crisp photographic metals and diamonds (No white body glow)
     materialsRef.current = {
       gold18k: new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xebb341),
+        color: new THREE.Color(0xe2bf7f).convertSRGBToLinear(),
         roughness: 0.055,
         metalness: 0.94,
         envMapIntensity: 1.5,
@@ -665,7 +705,7 @@ export default function WebgiRingViewer({
         reflectivity: 0.95,
       }),
       gold22k: new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xf0b83b),
+        color: new THREE.Color(0xf7c478).convertSRGBToLinear(),
         roughness: 0.055,
         metalness: 0.95,
         envMapIntensity: 1.5,
@@ -674,16 +714,16 @@ export default function WebgiRingViewer({
         reflectivity: 0.95,
       }),
       platinum: new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xc8cbd2),
+        color: new THREE.Color(0xfefefe).convertSRGBToLinear(),
         roughness: 0.055,
-        metalness: 0.95,
-        envMapIntensity: 1.4,
-        clearcoat: 0.80,
-        clearcoatRoughness: 0.040,
-        reflectivity: 0.90,
+        metalness: 0.94,
+        envMapIntensity: 1.5,
+        clearcoat: 0.85,
+        clearcoatRoughness: 0.035,
+        reflectivity: 0.95,
       }),
       roseGold: new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xee9284),
+        color: new THREE.Color(0xd28b8b).convertSRGBToLinear(),
         roughness: 0.055,
         metalness: 0.94,
         envMapIntensity: 1.5,
@@ -692,7 +732,7 @@ export default function WebgiRingViewer({
         reflectivity: 0.95,
       }),
       diamond: new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xf4f6fb), // Pure White Solitaire Diamond first
+        color: new THREE.Color(0xffffff).convertSRGBToLinear(), // Pure White Solitaire Diamond first
         transmission: 0.98,
         opacity: 1.0,
         transparent: true,
@@ -711,7 +751,7 @@ export default function WebgiRingViewer({
         attenuationDistance: 5.0,
       }),
       ruby: new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(0xba1333),
+        color: new THREE.Color(0xf70db1).convertSRGBToLinear(),
         transmission: 0.88,
         opacity: 1.0,
         transparent: true,
@@ -809,44 +849,6 @@ export default function WebgiRingViewer({
         jewelleryRootGroupRef.current.rotation.x = ringRotRef.current.x + hoverRotX;
         jewelleryRootGroupRef.current.rotation.y = ringRotRef.current.y + hoverRotY;
         jewelleryRootGroupRef.current.rotation.z = ringRotRef.current.z;
-
-    // Smooth scroll-driven metal & gemstone progression
-        // Progresses across sections: Hero (White Diamond/Gold) -> Details (Rose Gold/Pink/Ruby) -> Footer Signoff (Light Purple Diamond & Platinum/Silver)
-        const docScrollHeight = Math.max(1, (document.documentElement.scrollHeight || 1) - window.innerHeight);
-        const overallProgress = Math.min(1, Math.max(0, (window.scrollY || 0) / docScrollHeight));
-
-        const numStages = DYNAMIC_ROTATION_STAGES.length;
-        const stageProgress = overallProgress * (numStages - 1);
-        const idx = Math.max(0, Math.min(numStages - 2, Math.floor(stageProgress)));
-        const nextIdx = Math.min(numStages - 1, idx + 1);
-        const rawFrac = Math.max(0, Math.min(1, stageProgress - idx));
-        const frac = 0.5 - 0.5 * Math.cos(rawFrac * Math.PI); // Smooth sinusoidal ease
-
-        if (DYNAMIC_ROTATION_STAGES[idx] && DYNAMIC_ROTATION_STAGES[nextIdx]) {
-          _tempStone.copy(DYNAMIC_ROTATION_STAGES[idx].stone).lerp(DYNAMIC_ROTATION_STAGES[nextIdx].stone, frac);
-          _tempSilver.copy(DYNAMIC_ROTATION_STAGES[idx].silver).lerp(DYNAMIC_ROTATION_STAGES[nextIdx].silver, frac);
-          _tempGold.copy(DYNAMIC_ROTATION_STAGES[idx].gold).lerp(DYNAMIC_ROTATION_STAGES[nextIdx].gold, frac);
-
-          // Apply dynamically to diamonds (white -> pink -> ruby red -> light purple)
-          if (diamondMeshesRef.current && diamondMeshesRef.current.length > 0) {
-            for (let i = 0; i < diamondMeshesRef.current.length; i++) {
-              const m = diamondMeshesRef.current[i];
-              if (m && m.material && m.material.color) {
-                m.material.color.copy(_tempStone);
-              }
-            }
-          }
-
-          // Apply dynamically to silver/shank metal (gold -> rose gold -> sovereign gold -> platinum)
-          if (silverMeshRef.current?.material?.color) {
-            silverMeshRef.current.material.color.copy(_tempSilver);
-          }
-
-          // Apply dynamically to gold/caviar metal
-          if (goldMeshRef.current?.material?.color) {
-            goldMeshRef.current.material.color.copy(_tempGold);
-          }
-        }
       }
 
       // Animate subtle micro diamond glitter twinkles (Crisp, delicate star-glints)
@@ -981,7 +983,7 @@ export default function WebgiRingViewer({
   // Update Diamond Color
   useEffect(() => {
     const hex = DIAMOND_COLORS[activeGemColor] ?? 0xffffff;
-    const targetColor = new THREE.Color(hex);
+    const targetColor = new THREE.Color(hex).convertSRGBToLinear();
     diamondMeshesRef.current.forEach((mesh) => {
       if (mesh.material) {
         gsap.to(mesh.material.color, {
@@ -998,7 +1000,7 @@ export default function WebgiRingViewer({
   useEffect(() => {
     const preset = MATERIAL_PRESETS[activeMaterial] || MATERIAL_PRESETS.default;
     if (silverMeshRef.current?.material) {
-      const targetSilver = new THREE.Color(preset.silver);
+      const targetSilver = new THREE.Color(preset.silver).convertSRGBToLinear();
       gsap.to(silverMeshRef.current.material.color, {
         r: targetSilver.r,
         g: targetSilver.g,
@@ -1007,7 +1009,7 @@ export default function WebgiRingViewer({
       });
     }
     if (goldMeshRef.current?.material) {
-      const targetGold = new THREE.Color(preset.gold);
+      const targetGold = new THREE.Color(preset.gold).convertSRGBToLinear();
       gsap.to(goldMeshRef.current.material.color, {
         r: targetGold.r,
         g: targetGold.g,

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Info } from 'lucide-react';
+import { Moon, Sun, Info, User } from 'lucide-react';
 import { luxuryAudio } from '../utils/audio';
 
 export default function Navbar({
   isDark,
   setIsDark,
   onOpenKnowMore,
+  onScrollToAuth,
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -21,6 +22,18 @@ export default function Navbar({
   const handleThemeToggle = () => {
     luxuryAudio.playClick();
     setIsDark(!isDark);
+  };
+
+  const handleUserClick = () => {
+    luxuryAudio.playClick();
+    if (onScrollToAuth) {
+      onScrollToAuth();
+    } else {
+      const el = document.getElementById('auth-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   const textColor = isDark ? 'text-[#FAF6F0]' : 'text-[#3E1821]';
@@ -54,7 +67,7 @@ export default function Navbar({
         </a>
 
         {/* Right Navigation & Controls */}
-        <div className="flex items-center gap-2.5 sm:gap-4 md:gap-6 lg:gap-8">
+        <div className="flex items-center gap-2 sm:gap-3.5 md:gap-5 lg:gap-6">
           
           {/* Know More link */}
           <button
@@ -67,6 +80,16 @@ export default function Navbar({
             <span>Know more</span>
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 opacity-80 group-hover:scale-150 transition-transform duration-300" />
             <span className={`absolute bottom-0 left-0 w-0 h-[1px] transition-all duration-300 group-hover:w-full ${isDark ? 'bg-[#FAF6F0]' : 'bg-[#3E1821]'}`} />
+          </button>
+
+          {/* User Logo / Account Icon Button (Direct shortcut to Login / Register) */}
+          <button
+            onClick={handleUserClick}
+            aria-label="Go to VIP Client Login / Register"
+            title="VIP Client Login & Register"
+            className={`w-9 h-9 sm:w-10 sm:h-10 min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-full border flex items-center justify-center transition-all duration-300 backdrop-blur-md ${iconBorderColor} ${textColor} hover:scale-105 active:scale-95 group`}
+          >
+            <User className="w-4 h-4 opacity-85 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 stroke-[1.75]" />
           </button>
 
           {/* Theme Mode Toggle (Imperial Ruby Red vs Rose Luxury Blush Pink) */}

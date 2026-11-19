@@ -82,6 +82,7 @@ export default function App() {
         isDark={isDark}
         setIsDark={setIsDark}
         onOpenKnowMore={() => setIsKnowMoreOpen(true)}
+        onScrollToAuth={() => scrollTo('auth-section')}
       />
 
       {/* Side 3-Dot Navigation */}

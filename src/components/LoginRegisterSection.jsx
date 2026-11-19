@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Mail, Lock, User, Check, Shield } from 'lucide-react';
+import { Sparkles, Mail, Lock, User, Check } from 'lucide-react';
 import { luxuryAudio } from '../utils/audio';
 
 export default function LoginRegisterSection({ isDark = false, onLoginSuccess }) {
@@ -40,18 +40,21 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
   return (
     <section 
       id="auth-section"
-      className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center py-16 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 pt-[max(4rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))] transition-colors duration-700 pointer-events-auto overflow-hidden"
+      className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center py-12 sm:py-16 lg:py-20 px-4 sm:px-8 lg:px-14 xl:px-20 2xl:px-28 pt-[max(4.5rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))] transition-colors duration-700 pointer-events-auto overflow-hidden"
     >
-      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
+      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center">
         
-        {/* Left Column: Reserved space on Desktop where the 3D Ring rolls to the Left Side */}
-        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 2xl:col-span-6 pointer-events-none min-h-[400px]" />
+        {/* On Mobile & Tablet Portrait: Reserved upper viewport space for the 3D Ring */}
+        <div className="w-full h-[32vh] xs:h-[34vh] sm:h-[36vh] md:h-[38vh] max-h-[380px] lg:hidden flex-shrink-0 pointer-events-none" />
 
-        {/* Right Column: Section Header & Login / Register Box (Positioned on the Right Side) */}
-        <div className="w-full lg:col-span-6 xl:col-span-6 2xl:col-span-6 flex flex-col items-center lg:items-start space-y-6 sm:space-y-8 relative z-10 max-w-md sm:max-w-lg mx-auto lg:mx-0">
+        {/* On Desktop & Ultrawide: Left Column spacer for 3D Ring on FULL LEFT */}
+        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 2xl:col-span-6 pointer-events-none min-h-[440px]" />
+
+        {/* Right Column: Section Header & Login / Register Box on the RIGHT SIDE */}
+        <div className="w-full lg:col-span-6 xl:col-span-6 2xl:col-span-6 flex flex-col items-center lg:items-end space-y-4 sm:space-y-6 relative z-10 max-w-md sm:max-w-lg lg:max-w-[440px] xl:max-w-[480px] 2xl:max-w-[500px] mx-auto lg:mr-0 lg:ml-auto">
           
           {/* Section Header */}
-          <div className="text-center lg:text-left space-y-2.5 sm:space-y-3 w-full">
+          <div className="text-center lg:text-left space-y-2 sm:space-y-2.5 w-full">
             <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full border border-current/15 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
               <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-semibold opacity-80">
@@ -69,7 +72,7 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
           </div>
 
           {/* Embedded Login / Register Box */}
-          <div className={`w-full p-5 sm:p-8 lg:p-10 rounded-3xl border transition-all duration-500 ${cardBg}`}>
+          <div className={`w-full p-5 sm:p-7 lg:p-8 xl:p-9 rounded-3xl border transition-all duration-500 ${cardBg}`}>
             
             {/* Tab Switcher */}
             <div className="flex items-center p-1 rounded-full border border-current/20 mb-6 sm:mb-8 backdrop-blur-md">
@@ -180,7 +183,7 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
               </div>
 
               {/* Remember Me checkbox */}
-              <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center pt-1">
                 <label className="flex items-center gap-2 text-xs cursor-pointer select-none opacity-80 min-h-[32px]">
                   <input
                     type="checkbox"
@@ -190,10 +193,6 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                   />
                   <span className="text-[11px] sm:text-xs">Remember me</span>
                 </label>
-
-                <span className="flex items-center gap-1 text-[10px] opacity-60">
-                  <Shield className="w-3 h-3 text-emerald-500" /> 256-bit SSL Vault
-                </span>
               </div>
 
               {/* Submit Action */}
