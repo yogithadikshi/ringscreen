@@ -40,42 +40,42 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
   return (
     <section 
       id="auth-section"
-      className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center py-12 sm:py-16 lg:py-20 px-4 sm:px-8 lg:px-14 xl:px-20 2xl:px-28 pt-[max(4.5rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))] transition-colors duration-700 pointer-events-auto overflow-hidden"
+      className="relative min-h-screen min-h-[100dvh] w-full flex items-center justify-center py-10 sm:py-16 lg:py-20 3xl:py-28 px-3 xs:px-5 sm:px-8 lg:px-14 xl:px-20 2xl:px-28 4xl:px-36 pt-[max(4.5rem,env(safe-area-inset-top,0px))] pb-[max(3rem,env(safe-area-inset-bottom,0px))] transition-colors duration-700 pointer-events-auto overflow-hidden"
     >
-      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center">
+      <div className="max-w-7xl 2xl:max-w-[1600px] 3xl:max-w-[1920px] 4xl:max-w-[2400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-12 items-center">
         
         {/* On Mobile & Tablet Portrait: Reserved upper viewport space for the 3D Ring */}
-        <div className="w-full h-[32vh] xs:h-[34vh] sm:h-[36vh] md:h-[38vh] max-h-[380px] lg:hidden flex-shrink-0 pointer-events-none" />
+        <div className="w-full h-[28vh] xs:h-[32vh] sm:h-[34vh] md:h-[36vh] max-h-[360px] lg:hidden landscape:hidden flex-shrink-0 pointer-events-none" />
 
         {/* On Desktop & Ultrawide: Left Column spacer for 3D Ring on FULL LEFT */}
-        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 2xl:col-span-6 pointer-events-none min-h-[440px]" />
+        <div className="hidden lg:block lg:col-span-6 xl:col-span-6 2xl:col-span-6 pointer-events-none min-h-[400px] 2xl:min-h-[500px] 3xl:min-h-[600px]" />
 
         {/* Right Column: Section Header & Login / Register Box on the RIGHT SIDE */}
-        <div className="w-full lg:col-span-6 xl:col-span-6 2xl:col-span-6 flex flex-col items-center lg:items-end space-y-4 sm:space-y-6 relative z-10 max-w-md sm:max-w-lg lg:max-w-[440px] xl:max-w-[480px] 2xl:max-w-[500px] mx-auto lg:mr-0 lg:ml-auto">
+        <div className="w-full lg:col-span-6 xl:col-span-6 2xl:col-span-6 flex flex-col items-center lg:items-end space-y-3.5 sm:space-y-6 relative z-10 max-w-md sm:max-w-lg lg:max-w-[440px] xl:max-w-[480px] 2xl:max-w-[520px] 3xl:max-w-[560px] mx-auto lg:mr-0 lg:ml-auto">
           
           {/* Section Header */}
           <div className="text-center lg:text-left space-y-2 sm:space-y-2.5 w-full">
-            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full border border-current/15 backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-current/15 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-semibold opacity-80">
+              <span className="text-[9.5px] xs:text-[10px] sm:text-[11px] 3xl:text-xs uppercase tracking-[0.28em] font-semibold opacity-80">
                 Clientèle Access
               </span>
             </div>
 
-            <h2 className={`font-serif-luxury text-2xl xs:text-3xl sm:text-4xl lg:text-5xl tracking-tight uppercase ${headingColor}`}>
+            <h2 className={`font-serif-luxury text-xl xs:text-2xl sm:text-4xl lg:text-5xl 3xl:text-6xl tracking-tight uppercase ${headingColor}`}>
               MAISON VAULT
             </h2>
 
-            <p className={`font-sans-luxury text-xs sm:text-sm 2xl:text-base leading-relaxed max-w-sm sm:max-w-md ${subtextColor}`}>
+            <p className={`font-sans-luxury text-xs xs:text-[13px] sm:text-sm 2xl:text-base 3xl:text-lg leading-relaxed max-w-sm sm:max-w-md 2xl:max-w-lg ${subtextColor}`}>
               Sign in or create your private VIP account to access exclusive jewellery showcases, custom atelier orders, and private concierge services.
             </p>
           </div>
 
           {/* Embedded Login / Register Box */}
-          <div className={`w-full p-5 sm:p-7 lg:p-8 xl:p-9 rounded-3xl border transition-all duration-500 ${cardBg}`}>
+          <div className={`w-full p-4 xs:p-6 sm:p-7 lg:p-8 xl:p-9 3xl:p-10 rounded-3xl border transition-all duration-500 ${cardBg}`}>
             
             {/* Tab Switcher */}
-            <div className="flex items-center p-1 rounded-full border border-current/20 mb-6 sm:mb-8 backdrop-blur-md">
+            <div className="flex items-center p-1 rounded-full border border-current/20 mb-5 sm:mb-8 backdrop-blur-md">
               <button
                 type="button"
                 onClick={() => {
@@ -83,7 +83,7 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                   setActiveTab('login');
                   setSuccessMsg('');
                 }}
-                className={`w-1/2 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 min-h-[38px] ${
+                className={`w-1/2 py-2 sm:py-2.5 rounded-full text-[10px] xs:text-[11px] sm:text-xs 3xl:text-sm uppercase tracking-[0.18em] font-semibold transition-all duration-300 min-h-[38px] ${
                   activeTab === 'login'
                     ? isDark
                       ? 'bg-[#FAF6F0] text-[#8B1E2E] shadow-md'
@@ -102,7 +102,7 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                   setActiveTab('register');
                   setSuccessMsg('');
                 }}
-                className={`w-1/2 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 min-h-[38px] ${
+                className={`w-1/2 py-2 sm:py-2.5 rounded-full text-[10px] xs:text-[11px] sm:text-xs 3xl:text-sm uppercase tracking-[0.18em] font-semibold transition-all duration-300 min-h-[38px] ${
                   activeTab === 'register'
                     ? isDark
                       ? 'bg-[#FAF6F0] text-[#8B1E2E] shadow-md'
@@ -117,10 +117,10 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-5">
               {activeTab === 'register' && (
                 <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-semibold opacity-75 block">
+                  <label className="text-[9.5px] xs:text-[10px] sm:text-[11px] 3xl:text-xs uppercase tracking-[0.18em] font-semibold opacity-75 block">
                     Full Name
                   </label>
                   <div className="relative">
@@ -131,14 +131,14 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. Elena Rostova"
-                      className="w-full pl-10 pr-4 py-2.5 sm:py-3 rounded-2xl border border-current/20 bg-white/20 dark:bg-black/30 backdrop-blur-md text-[16px] sm:text-xs 2xl:text-sm focus:outline-none focus:border-amber-500 placeholder:opacity-50"
+                      className="w-full pl-9 sm:pl-10 pr-3.5 sm:pr-4 py-2.5 sm:py-3 rounded-2xl border border-current/20 bg-white/20 dark:bg-black/30 backdrop-blur-md text-[16px] sm:text-xs 2xl:text-sm 3xl:text-base focus:outline-none focus:border-amber-500 placeholder:opacity-50"
                     />
                   </div>
                 </div>
               )}
 
               <div className="space-y-1.5">
-                <label className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-semibold opacity-75 block">
+                <label className="text-[9.5px] xs:text-[10px] sm:text-[11px] 3xl:text-xs uppercase tracking-[0.18em] font-semibold opacity-75 block">
                   Email Address
                 </label>
                 <div className="relative">
@@ -149,21 +149,21 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="client@luxuryvault.com"
-                    className="w-full pl-10 pr-4 py-2.5 sm:py-3 rounded-2xl border border-current/20 bg-white/20 dark:bg-black/30 backdrop-blur-md text-[16px] sm:text-xs 2xl:text-sm focus:outline-none focus:border-amber-500 placeholder:opacity-50"
+                    className="w-full pl-9 sm:pl-10 pr-3.5 sm:pr-4 py-2.5 sm:py-3 rounded-2xl border border-current/20 bg-white/20 dark:bg-black/30 backdrop-blur-md text-[16px] sm:text-xs 2xl:text-sm 3xl:text-base focus:outline-none focus:border-amber-500 placeholder:opacity-50"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex justify-between items-center">
-                  <label className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] font-semibold opacity-75">
+                  <label className="text-[9.5px] xs:text-[10px] sm:text-[11px] 3xl:text-xs uppercase tracking-[0.18em] font-semibold opacity-75">
                     Password
                   </label>
                   {activeTab === 'login' && (
                     <button
                       type="button"
                       onClick={() => luxuryAudio.playClick()}
-                      className="text-[10px] uppercase tracking-wider opacity-60 hover:opacity-100 hover:underline py-1"
+                      className="text-[9.5px] xs:text-[10px] uppercase tracking-wider opacity-60 hover:opacity-100 hover:underline py-1"
                     >
                       Forgot?
                     </button>
@@ -177,7 +177,7 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full pl-10 pr-4 py-2.5 sm:py-3 rounded-2xl border border-current/20 bg-white/20 dark:bg-black/30 backdrop-blur-md text-[16px] sm:text-xs 2xl:text-sm focus:outline-none focus:border-amber-500 placeholder:opacity-50"
+                    className="w-full pl-9 sm:pl-10 pr-3.5 sm:pr-4 py-2.5 sm:py-3 rounded-2xl border border-current/20 bg-white/20 dark:bg-black/30 backdrop-blur-md text-[16px] sm:text-xs 2xl:text-sm 3xl:text-base focus:outline-none focus:border-amber-500 placeholder:opacity-50"
                   />
                 </div>
               </div>
@@ -191,14 +191,14 @@ export default function LoginRegisterSection({ isDark = false, onLoginSuccess })
                     onChange={(e) => setRememberMe(e.target.checked)}
                     className="rounded text-amber-500 focus:ring-0 w-4 h-4"
                   />
-                  <span className="text-[11px] sm:text-xs">Remember me</span>
+                  <span className="text-[10.5px] xs:text-[11px] sm:text-xs">Remember me</span>
                 </label>
               </div>
 
               {/* Submit Action */}
               <button
                 type="submit"
-                className={`w-full py-3.5 sm:py-4 mt-2 rounded-full text-xs uppercase tracking-[0.22em] font-semibold transition-all duration-300 shadow-xl active:scale-95 min-h-[44px] ${
+                className={`w-full py-3 xs:py-3.5 sm:py-4 mt-2 rounded-full text-xs 3xl:text-sm uppercase tracking-[0.22em] font-semibold transition-all duration-300 shadow-xl active:scale-95 min-h-[44px] ${
                   successMsg
                     ? 'bg-emerald-600 text-white'
                     : isDark

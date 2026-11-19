@@ -21,7 +21,7 @@ export default function KnowMoreModal({ isOpen, onClose, isDark = false }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 xs:p-4 sm:p-6 md:p-10">
         
         {/* Backdrop Overlay */}
         <motion.div
@@ -41,7 +41,7 @@ export default function KnowMoreModal({ isOpen, onClose, isDark = false }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className={`relative w-full max-w-2xl 2xl:max-w-3xl max-h-[90vh] max-h-[90dvh] overflow-y-auto rounded-3xl border shadow-2xl p-5 sm:p-8 md:p-10 backdrop-blur-2xl z-10 ${bgStyle}`}
+          className={`relative w-full max-w-2xl 2xl:max-w-3xl 3xl:max-w-4xl max-h-[90vh] max-h-[90dvh] overflow-y-auto rounded-3xl border shadow-2xl p-4 xs:p-6 sm:p-8 md:p-10 backdrop-blur-2xl z-10 ${bgStyle}`}
         >
           {/* Close Button */}
           <button
@@ -50,26 +50,26 @@ export default function KnowMoreModal({ isOpen, onClose, isDark = false }) {
               onClose();
             }}
             aria-label="Close dialog"
-            className="absolute top-4 sm:top-6 right-4 sm:right-6 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full border border-current/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+            className="absolute top-3 xs:top-4 sm:top-6 right-3 xs:right-4 sm:right-6 w-9 h-9 sm:w-10 sm:h-10 min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-full border border-current/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
           >
             <X className="w-4 h-4" />
           </button>
 
           {/* Modal Header */}
-          <div className="space-y-2 mb-8 pr-8">
+          <div className="space-y-2 mb-6 sm:mb-8 pr-8">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-500" />
-              <span className="text-[11px] uppercase tracking-[0.25em] font-semibold opacity-75">
+              <span className="text-[10px] xs:text-[11px] uppercase tracking-[0.25em] font-semibold opacity-75">
                 Dikshi Jewellery Maison
               </span>
             </div>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl font-normal uppercase tracking-tight">
+            <h2 className="font-serif-luxury text-xl xs:text-2xl sm:text-3xl md:text-4xl 3xl:text-5xl font-normal uppercase tracking-tight">
               The Artistry of Dikshi Jewellery
             </h2>
           </div>
 
           {/* Content Body */}
-          <div className="space-y-6 text-sm sm:text-base leading-relaxed font-sans-luxury opacity-90">
+          <div className="space-y-4 sm:space-y-6 text-xs xs:text-sm sm:text-base leading-relaxed font-sans-luxury opacity-90">
             
             {/* Introductory Text */}
             <p>

@@ -896,6 +896,7 @@ export default function WebgiRingViewer({
       camera.fov = cfg.heroFov;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       if (composerRef.current) {
         composerRef.current.setSize(w, h);
       }

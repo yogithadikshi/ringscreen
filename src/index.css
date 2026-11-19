@@ -1,5 +1,16 @@
 @import 'tailwindcss';
 
+@theme {
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4xl: 2560px;
+}
+
 @layer base {
   :root {
     --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
@@ -16,6 +27,7 @@
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    overflow-x: hidden;
   }
 
   body {
@@ -23,6 +35,8 @@
     min-height: 100vh;
     min-height: 100dvh;
     overflow-x: hidden;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Prevent automatic unwanted iOS Safari zoom on focus while maintaining clean desktop sizing */
@@ -50,19 +64,19 @@
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
-/* Fluid Scalable Typography for Universal Screen Sizes (320px to 4K Ultrawide) */
+/* Fluid Scalable Typography for Universal Screen Sizes (320px to 8K Ultrawide) */
 .text-hero-fluid {
-  font-size: clamp(2.4rem, 7.5vw, 7.25rem);
+  font-size: clamp(1.85rem, 6.8vw, 7.25rem);
   line-height: 0.92;
 }
 
 .text-heading-fluid {
-  font-size: clamp(1.85rem, 4.2vw, 4.5rem);
+  font-size: clamp(1.55rem, 3.8vw, 4.25rem);
   line-height: 1.08;
 }
 
 .text-brand-fluid {
-  font-size: clamp(1.05rem, 2.2vw, 2.4rem);
+  font-size: clamp(0.9rem, 2vw, 2.25rem);
 }
 
 /* 3D Perspective Container */
